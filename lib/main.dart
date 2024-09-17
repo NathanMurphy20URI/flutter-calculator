@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:expressions/expressions.dart';
 
 void main() {
-  runApp(CalculatorApp());
+  runApp(const CalculatorApp());
 }
 
 class CalculatorApp extends StatelessWidget {
@@ -42,6 +42,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           const evaluator = ExpressionEvaluator();
           final result = evaluator.eval(expression, {});
           _result = ' = $result';
+        } catch (e) {
+          _result = ' Error';
+        }
+      } else if (value == 'x²') {
+        try {
+          final expression = Expression.parse(_expression);
+          const evaluator = ExpressionEvaluator();
+          final result = evaluator.eval(expression, {});
+          _expression = '($result)^2';
+          _result = ' = ${result * result}'; // Update the result after squaring
+          _expression = ''; // Clear the expression
         } catch (e) {
           _result = ' Error';
         }
@@ -95,6 +106,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       '0',
       '=',
       '+',
+      'x²', // Added square number button
     ];
 
     return Expanded(
